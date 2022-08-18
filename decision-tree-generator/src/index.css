@@ -1,0 +1,102 @@
+.title {
+  text-align: center;
+  font-family: "Courier New", Courier, monospace;
+  color: #eee;
+}
+
+.addForm {
+  background-color: #ccc;
+  margin: 1rem;
+  padding: 1rem;
+  font-family: "Courier New", Courier, monospace;
+  border-radius: 30px;
+}
+.newData {
+  width: 99%;
+  font-size: larger;
+}
+
+body {
+  background-color: #333;
+}
+
+.dataTable {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.dataTable td,
+.dataTable th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.dataTable tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.dataTable tr:nth-child(odd) {
+  background-color: #f2f2f2b7;
+}
+
+.dataTable tr:hover {
+  background-color: #ddd;
+}
+
+.dataTable th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04aa6d;
+  color: white;
+}
+
+.nextButton {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: large;
+  background-color: lightblue;
+  margin: 10px;
+}
+
+.insertButton {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-size: large;
+  background-color: lightgreen;
+  margin: 10px;
+}
+
+.deleteButton {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  background-color: lightcoral;
+  margin: 5px;
+}
+
+.error {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Verdana, sans-serif;
+  text-align: center;
+  background-color: lightcoral;
+  padding: 1px;
+  border-radius: 30px;
+  border: 5px solid rgb(255, 103, 103);
+  margin: auto 10px;
+}
+
+.dataInputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.dataInputs input {
+  margin: 5px 10px;
+}
+
+.dataInputs label {
+  font-weight: bold;
+}
+
+.buttonCell {
+  width: 20px;
+}
