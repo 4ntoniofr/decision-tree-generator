@@ -4,21 +4,35 @@ function TableData({
   dataInputs,
   setDataInputs,
   data,
+  dataFormated,
+  setDataFormated,
   setData,
   appState,
 }) {
   const handleDeleteColumn = (deleteColumn) => {
     if (columns.includes(deleteColumn)) {
       setColumns(columns.filter((column) => column !== deleteColumn));
+      dataFormated.delete(deleteColumn);
+      setDataFormated(dataFormated);
+      let copy = dataInputs.slice();
+      copy.pop();
+      setDataInputs(copy);
     }
-    let copy = dataInputs.slice();
-    copy.pop();
-    setDataInputs(copy);
   };
 
   const handleDeleteRow = (deleteRow) => {
     if (data.includes(deleteRow)) {
       setData(data.filter((row) => row !== deleteRow));
+      deleteRow.forEach((element, i) => {
+        if (dataFormated.get(columns[i]).get(element) <= 1) {
+          dataFormated.get(columns[i]).delete(element);
+        } else {
+          dataFormated
+            .get(columns[i])
+            .set(element, dataFormated.get(columns[i]).get(element) - 1);
+        }
+      });
+      setDataFormated(dataFormated);
     }
   };
 
@@ -38,7 +52,7 @@ function TableData({
                       handleDeleteColumn(column);
                     }}
                   >
-                    Delete
+                    Remove
                   </button>
                 ) : null}
               </th>
@@ -62,7 +76,7 @@ function TableData({
                           handleDeleteRow(example);
                         }}
                       >
-                        Delete
+                        Remove
                       </button>
                     </td>
                   ) : null}

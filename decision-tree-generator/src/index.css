@@ -1,28 +1,140 @@
-.title {
-  text-align: center;
-  font-family: "Courier New", Courier, monospace;
-  color: #eee;
-}
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap");
 
-.addForm {
-  background-color: #ccc;
-  margin: 1rem;
-  padding: 1rem;
-  font-family: "Courier New", Courier, monospace;
-  border-radius: 30px;
-}
-.newData {
-  width: 99%;
-  font-size: larger;
+/* Body */
+@keyframes backgroundAnimation {
+  0% {
+    background-position: 91% 0%;
+  }
+  50% {
+    background-position: 10% 100%;
+  }
+  100% {
+    background-position: 91% 0%;
+  }
 }
 
 body {
-  background-color: #333;
+  background: linear-gradient(226deg, #ffffff, #49c5ff);
+  background-size: 1000% 1000%;
+
+  animation: backgroundAnimation 43s ease infinite;
 }
 
+/* Title on the top of the app */
+.title {
+  text-align: center;
+  font-family: "Poppins";
+  color: black;
+}
+
+/* Form in the main page */
+.homePageForm {
+  margin: 1rem;
+  padding: 1rem;
+  font-family: "Poppins";
+}
+
+.homePageForm h2 {
+  text-align: center;
+}
+
+.homePageForm .buttons {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.homePageForm .buttons button {
+  margin: 30px;
+
+  border: 3px solid black;
+  border-radius: 20px;
+  padding: 20px 15%;
+
+  background-color: transparent;
+
+  font-family: "Poppins";
+  font-size: large;
+}
+
+.homePageForm .buttons button:active {
+  background-color: black;
+  color: grey;
+}
+
+/* Every form to add data in the app */
+.addForm {
+  margin: 1rem;
+  padding: 1rem;
+  font-family: "Poppins";
+  border-radius: 30px;
+}
+
+/* Text input */
+.newData {
+  width: 99%;
+  font-size: larger;
+  padding: 7px;
+  border-radius: 15px;
+  border: 3px solid #000;
+}
+
+/* Buttons */
+.addForm button {
+  font-weight: bold;
+  font-size: large;
+  margin: 10px;
+  margin-top: 20px;
+  padding: 6px 6px;
+  border-radius: 10px;
+  border: 3px solid #000;
+}
+
+.nextButton {
+  background-color: rgb(253, 251, 117);
+}
+
+.insertButton {
+  background-color: lightgreen;
+}
+
+.deleteButton {
+  font-family: "Poppins";
+  background-color: lightcoral;
+  margin: 5px;
+}
+
+/* Inputs in Insert new data page*/
+.dataInputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.dataInputs input {
+  margin: 5px 10px;
+  border-radius: 10px;
+  border: 3px solid #000;
+  font-size: large;
+  padding: 5px;
+}
+
+.dataInputs label {
+  font-size: large;
+}
+
+.selectMain {
+  min-width: 10rem;
+  font-weight: bolder;
+  font-size: 20px;
+}
+
+/* Styles of the table */
 .dataTable {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
+  border-radius: 1rem;
   width: 100%;
 }
 
@@ -33,70 +145,104 @@ body {
 }
 
 .dataTable tr:nth-child(even) {
-  background-color: #f2f2f2;
+  background-color: rgb(255, 255, 255, 0.25);
 }
 
 .dataTable tr:nth-child(odd) {
-  background-color: #f2f2f2b7;
+  background-color: rgb(0, 174, 255, 0.25);
 }
 
 .dataTable tr:hover {
-  background-color: #ddd;
-}
-
-.dataTable th {
-  padding-top: 12px;
-  padding-bottom: 12px;
-  text-align: left;
-  background-color: #04aa6d;
+  background-color: rgb(0, 0, 0);
   color: white;
 }
 
-.nextButton {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: large;
-  background-color: lightblue;
-  margin: 10px;
-}
-
-.insertButton {
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  font-size: large;
-  background-color: lightgreen;
-  margin: 10px;
-}
-
-.deleteButton {
-  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  background-color: lightcoral;
-  margin: 5px;
-}
-
-.error {
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Verdana, sans-serif;
-  text-align: center;
-  background-color: lightcoral;
-  padding: 1px;
-  border-radius: 30px;
-  border: 5px solid rgb(255, 103, 103);
-  margin: auto 10px;
-}
-
-.dataInputs {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-}
-
-.dataInputs input {
-  margin: 5px 10px;
-}
-
-.dataInputs label {
-  font-weight: bold;
+.dataTable th {
+  font-family: Poppins;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #009cb1;
+  color: white;
 }
 
 .buttonCell {
   width: 20px;
+}
+
+/* Notification Styles */
+.error {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Verdana, sans-serif;
+  text-align: center;
+  background-color: rgb(255, 0, 0, 0.75);
+  padding: 1px;
+  border-radius: 30px;
+  border: 3px solid black;
+  margin: auto 10px;
+}
+
+/* Tree Styles */
+
+#tree {
+  background-color: rgb(255, 255, 255, 0.25);
+  border-radius: 20px;
+  margin: 1rem;
+}
+
+.node p {
+  font-size: 20px;
+  line-height: 20px;
+  height: 20px;
+  font-weight: bold;
+  padding: 3px;
+  margin: 0;
+}
+
+/* Type of nodes */
+.undefined {
+  border: 3px solid red;
+  border-radius: 10px;
+  padding: 2px;
+}
+
+.undefined p {
+  color: rgb(77, 77, 77);
+}
+
+.column {
+  background-color: orange;
+  border-radius: 10px;
+  padding: 0.5%;
+}
+
+.value p {
+  color: black;
+}
+
+.solution {
+  background-color: #04aa6d;
+  padding: 0.75%;
+  border-radius: 50%;
+  text-align: center;
+}
+
+.solution .node-title {
+  font-size: 15px;
+  color: #000;
+}
+
+.solution p {
+  color: white;
+}
+
+/* Accuracy of the tree */
+.accuracy {
+  text-align: center;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  font-weight: bolder;
+
+  padding: 3px;
+  border: 3px solid black;
+  border-radius: 10px;
 }

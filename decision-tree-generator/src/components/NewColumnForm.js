@@ -9,6 +9,8 @@ function NewColumnForm({
   setMessageType,
   dataInputs,
   setDataInputs,
+  dataFormated,
+  setDataFormated,
 }) {
   const handleAdd = (event) => {
     event.preventDefault();
@@ -16,6 +18,7 @@ function NewColumnForm({
       setColumns(columns.concat(newColumn));
       setNewColumn("");
       setDataInputs(dataInputs.concat(""));
+      setDataFormated(dataFormated.set(newColumn, new Map()));
       window.onbeforeunload = function () {
         return "Would you like to reload the page?";
       };
