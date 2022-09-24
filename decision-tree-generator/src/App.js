@@ -1,18 +1,18 @@
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
-import HomePageForm from "./components/HomePage";
-import CsvFileInput from "./components/CsvFileInput";
-import NewColumnForm from "./components/NewColumnForm";
-import TableData from "./components/TableData";
+import Title from "./components/Title";
+import DefiningCsvPage from "./pages/DefiningCsvPage";
 import Notification from "./components/Notification";
-import NewDataForm from "./components/NewDataForm";
-import Results from "./components/Result";
-import Tree from "./components/Tree";
+import HomePage from "./pages/HomePage";
+import InsertColumnsPage from "./pages/InsertColumnsPage";
+import InsertDataPage from "./pages/InsertDataPage";
+import CsvInputPage from "./pages/CsvInputPage";
+import ResultPage from "./pages/ResultPage";
 
 function App() {
-  const [appState, setAppState] = useState("column");
-  const [csvFile, setCsvFile] = useState(null);
-  const [newColumn, setNewColumn] = useState("");
+  const [appState, setAppState] = useState("");
   const [columns, setColumns] = useState([]);
+  const [columnsTypes, setColumnsTypes] = useState([]);
   const [dataInputs, setDataInputs] = useState([]);
   const [dataTable, setDataTable] = useState([]);
   const [dataFormated, setDataFormated] = useState(new Map());
@@ -21,24 +21,31 @@ function App() {
   const [message, setMessage] = useState(null);
   const [messageType, setMessageType] = useState(null);
 
-  useEffect(() => {
+  /* useEffect(() => {
     setColumns(["Sky", "Temperature", "Humidity", "Wind", "PlayTennis"]);
+    setColumnsTypes([
+      "discrete",
+      "continuous",
+      "continuous",
+      "discrete",
+      "discrete",
+    ]);
     setDataInputs(["", "", "", "", ""]);
     setDataTable([
-      ["Sunny", "High", "High", "Weak", "No"],
-      ["Sunny", "High", "High", "Strong", "No"],
-      ["Cloudy", "High", "High", "Weak", "Yes"],
-      ["Rainy", "Warm", "High", "Weak", "Yes"],
-      ["Rainy", "Low", "Normal", "Weak", "Yes"],
-      ["Rainy", "Low", "Normal", "Strong", "No"],
-      ["Cloudy", "Low", "Normal", "Strong", "Yes"],
-      ["Sunny", "Warm", "High", "Weak", "No"],
-      ["Sunny", "Low", "Normal", "Weak", "Yes"],
-      ["Rainy", "Warm", "Normal", "Weak", "Yes"],
-      ["Sunny", "Warm", "Normal", "Strong", "Yes"],
-      ["Cloudy", "Warm", "High", "Strong", "Yes"],
-      ["Cloudy", "High", "Normal", "Weak", "Yes"],
-      ["Rainy", "Warm", "High", "Strong", "No"],
+      ["Sunny", "30", "85", "Weak", "No"],
+      ["Sunny", "26", "90", "Strong", "No"],
+      ["Cloudy", "28", "78", "Weak", "Yes"],
+      ["Rainy", "21", "96", "Weak", "Yes"],
+      ["Rainy", "20", "80", "Weak", "Yes"],
+      ["Rainy", "18", "70", "Strong", "No"],
+      ["Cloudy", "17.7", "65", "Strong", "Yes"],
+      ["Sunny", "22", "95", "Weak", "No"],
+      ["Sunny", "20.5", "70", "Weak", "Yes"],
+      ["Rainy", "24", "80", "Weak", "Yes"],
+      ["Sunny", "24", "70", "Strong", "Yes"],
+      ["Cloudy", "22", "90", "Strong", "Yes"],
+      ["Cloudy", "27", "75", "Weak", "Yes"],
+      ["Rainy", "21.6", "80", "Strong", "No"],
     ]);
     setDataFormated(
       new Map([
@@ -48,21 +55,6 @@ function App() {
             ["Sunny", 5],
             ["Cloudy", 4],
             ["Rainy", 5],
-          ]),
-        ],
-        [
-          "Temperature",
-          new Map([
-            ["High", 4],
-            ["Warm", 6],
-            ["Low", 4],
-          ]),
-        ],
-        [
-          "Humidity",
-          new Map([
-            ["High", 7],
-            ["Normal", 7],
           ]),
         ],
         [
@@ -81,7 +73,7 @@ function App() {
         ],
       ])
     );
-  }, []);
+  }, []); */
 
   useEffect(() => {
     require("treant-js/Treant.css");
@@ -93,8 +85,141 @@ function App() {
   }, []);
 
   return (
-    <div>
-      <h1 className="title">DECISION TREE GENERATOR</h1>
+    <>
+      <Title appState={appState} />
+      <Notification
+        message={message}
+        setMessage={setMessage}
+        messageType={messageType}
+        setMessageType={setMessageType}
+      />
+      <BrowserRouter>
+        <Routes>
+          <Route
+            path="/"
+            element={<HomePage appState={appState} setAppState={setAppState} />}
+          />
+          <Route
+            path="/insertColumns"
+            element={
+              <InsertColumnsPage
+                appState={appState}
+                setAppState={setAppState}
+                columns={columns}
+                setColumns={setColumns}
+                columnsTypes={columnsTypes}
+                setColumnsTypes={setColumnsTypes}
+                setMessage={setMessage}
+                setMessageType={setMessageType}
+                dataInputs={dataInputs}
+                setDataInputs={setDataInputs}
+                dataFormated={dataFormated}
+                setDataFormated={setDataFormated}
+                dataTable={dataTable}
+                setDataTable={setDataTable}
+              />
+            }
+          />
+          <Route
+            path="/insertData"
+            element={
+              columns && columns.length > 0 ? (
+                <InsertDataPage
+                  columns={columns}
+                  setColumns={setColumns}
+                  columnsTypes={columnsTypes}
+                  dataFormated={dataFormated}
+                  setDataFormated={setDataFormated}
+                  dataInputs={dataInputs}
+                  setDataInputs={setDataInputs}
+                  dataTable={dataTable}
+                  setDataTable={setDataTable}
+                  appState={appState}
+                  setAppState={setAppState}
+                  setMessage={setMessage}
+                  setMessageType={setMessageType}
+                />
+              ) : (
+                <Navigate to={"/"} />
+              )
+            }
+          />
+
+          <Route
+            path="/csv"
+            element={
+              <CsvInputPage
+                appState={appState}
+                setAppState={setAppState}
+                setColumns={setColumns}
+                setDataTable={setDataTable}
+                setDataInputs={setDataInputs}
+                setMessage={setMessage}
+                setMessageType={setMessageType}
+                columns={columns}
+                columnsTypes={columnsTypes}
+                dataInputs={dataInputs}
+                dataTable={dataTable}
+                dataFormated={dataFormated}
+                setDataFormated={setDataFormated}
+              />
+            }
+          />
+
+          <Route
+            path="/definingCsv"
+            element={
+              <DefiningCsvPage
+                appState={appState}
+                dataTable={dataTable}
+                columns={columns}
+                setColumnsTypes={setColumnsTypes}
+                setColumns={setColumns}
+                columnsTypes={columnsTypes}
+                dataInputs={dataInputs}
+                setDataInputs={setDataInputs}
+                data={dataTable}
+                dataFormated={dataFormated}
+                setDataFormated={setDataFormated}
+                setData={setDataTable}
+              />
+            }
+          />
+
+          <Route
+            path="/results"
+            element={
+              dataTable && dataTable.length > 0 ? (
+                <ResultPage
+                  columns={columns}
+                  setColumns={setColumns}
+                  dataInputs={dataInputs}
+                  setDataInputs={setDataInputs}
+                  columnsTypes={columnsTypes}
+                  appState={appState}
+                  setAppState={setAppState}
+                  mainColumn={mainColumn}
+                  setMainColumn={setMainColumn}
+                  data={dataTable}
+                  dataMap={dataFormated}
+                  setDataMap={setDataFormated}
+                  treeAccuracy={treeAccuracy}
+                  setTreeAccuracy={setTreeAccuracy}
+                  setMessage={setMessage}
+                  setMessageType={setMessageType}
+                />
+              ) : (
+                <Navigate to={"/"} />
+              )
+            }
+          />
+        </Routes>
+      </BrowserRouter>
+    </>
+  );
+
+  /* <div>
+      <Title appState={appState}></Title>
       <Notification
         message={message}
         setMessage={setMessage}
@@ -105,12 +230,21 @@ function App() {
         appState={appState}
         setAppState={setAppState}
       ></HomePageForm>
-      <CsvFileInput
+      <CsvInput
         appState={appState}
         setAppState={setAppState}
-        csvFile = {csvFile}
-        setCsvFile = {setCsvFile}
-      ></CsvFileInput>
+        setColumns={setColumns}
+        setDataTable={setDataTable}
+        setDataInputs={setDataInputs}
+        setMessage={setMessage}
+        setMessageType={setMessageType}
+      ></CsvInput>
+      <DefiningCsvData
+        appState={appState}
+        data={dataTable}
+        columns={columns}
+        setColumnsTypes={setColumnsTypes}
+      ></DefiningCsvData>
       <NewColumnForm
         newColumn={newColumn}
         setNewColumn={setNewColumn}
@@ -118,6 +252,8 @@ function App() {
         setAppState={setAppState}
         columns={columns}
         setColumns={setColumns}
+        columnsTypes={columnsTypes}
+        setColumnsTypes={setColumnsTypes}
         setMessage={setMessage}
         setMessageType={setMessageType}
         dataInputs={dataInputs}
@@ -127,6 +263,7 @@ function App() {
       ></NewColumnForm>
       <NewDataForm
         columns={columns}
+        columnsTypes={columnsTypes}
         dataFormated={dataFormated}
         setDataFormated={setDataFormated}
         dataInputs={dataInputs}
@@ -135,9 +272,12 @@ function App() {
         setDataTable={setDataTable}
         appState={appState}
         setAppState={setAppState}
+        setMessage={setMessage}
+        setMessageType={setMessageType}
       ></NewDataForm>
       <Results
         columns={columns}
+        columnsTypes={columnsTypes}
         appState={appState}
         setAppState={setAppState}
         mainColumn={mainColumn}
@@ -156,6 +296,7 @@ function App() {
       <TableData
         columns={columns}
         setColumns={setColumns}
+        columnsTypes={columnsTypes}
         dataInputs={dataInputs}
         setDataInputs={setDataInputs}
         data={dataTable}
@@ -164,8 +305,7 @@ function App() {
         setData={setDataTable}
         appState={appState}
       ></TableData>
-    </div>
-  );
+    </div> */
 }
 
 export default App;

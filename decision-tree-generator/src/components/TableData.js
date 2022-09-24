@@ -1,6 +1,7 @@
 function TableData({
   columns,
   setColumns,
+  columnsTypes,
   dataInputs,
   setDataInputs,
   data,
@@ -9,42 +10,57 @@ function TableData({
   setData,
   appState,
 }) {
+  const state = window.location.pathname;
+
   const handleDeleteColumn = (deleteColumn) => {
     if (columns.includes(deleteColumn)) {
+      const columIndex = columns.findIndex((column) => column === deleteColumn);
       setColumns(columns.filter((column) => column !== deleteColumn));
-      dataFormated.delete(deleteColumn);
-      setDataFormated(dataFormated);
-      let copy = dataInputs.slice();
-      copy.pop();
-      setDataInputs(copy);
+      const dataCopy = [...data];
+      dataCopy.forEach((instance, i) => {
+        dataCopy[i] = instance.filter((column, j) => columIndex !== j);
+      });
+      setData(dataCopy);
+      if (state !== "/csv") {
+        dataFormated.delete(deleteColumn);
+        setDataFormated(dataFormated);
+        let copy = dataInputs.slice();
+        copy.pop();
+        setDataInputs(copy);
+      }
     }
   };
 
   const handleDeleteRow = (deleteRow) => {
     if (data.includes(deleteRow)) {
       setData(data.filter((row) => row !== deleteRow));
-      deleteRow.forEach((element, i) => {
-        if (dataFormated.get(columns[i]).get(element) <= 1) {
-          dataFormated.get(columns[i]).delete(element);
-        } else {
-          dataFormated
-            .get(columns[i])
-            .set(element, dataFormated.get(columns[i]).get(element) - 1);
-        }
-      });
-      setDataFormated(dataFormated);
+      if (state !== "/csv") {
+        deleteRow.forEach((element, i) => {
+          if (dataFormated.get(columns[i]).get(element) <= 1) {
+            dataFormated.get(columns[i]).delete(element);
+          } else {
+            dataFormated
+              .get(columns[i])
+              .set(element, dataFormated.get(columns[i]).get(element) - 1);
+          }
+        });
+        setDataFormated(dataFormated);
+      }
     }
   };
 
   return (
-    <div>
+    <div className="tableContainer">
       <table className="dataTable">
         <thead>
-          <tr>
+          <tr className="headRow">
             {columns.map((column, id) => (
               <th key={id}>
-                {column}
-                {appState === "column" ? (
+                <div>
+                  <p className="columnName">{column}</p>
+                  <p className="columnType">{columnsTypes[id]}</p>
+                </div>
+                {state === "/csv" || state === "/insertColumns" ? (
                   <button
                     className="deleteButton"
                     type="button"
@@ -67,7 +83,7 @@ function TableData({
                   {example.map((elem, id) => (
                     <td key={(exId + 1) * (id + 1)}>{elem}</td>
                   ))}
-                  {appState === "data" ? (
+                  {state === "/csv" || state === "/insertData" ? (
                     <td className="buttonCell">
                       <button
                         className="deleteButton"

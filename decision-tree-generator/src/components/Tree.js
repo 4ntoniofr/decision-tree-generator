@@ -1,7 +1,11 @@
-function Tree({treeAccuracy, appState, setAppState}) {
+function Tree({ treeAccuracy, appState, setAppState }) {
   return (
     <>
-      {appState === "tree" ? <p className="accuracy">Tree accuracy: {treeAccuracy * 100}%</p> : null}
+      {appState === "tree" ? (
+        <div className="accuracy">
+          <p>Tree accuracy: {treeAccuracy * 100}%</p>
+        </div>
+      ) : null}
       <div id="tree"></div>
     </>
   );

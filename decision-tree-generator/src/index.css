@@ -3,28 +3,137 @@
 /* Body */
 @keyframes backgroundAnimation {
   0% {
-    background-position: 91% 0%;
+    background-position: 0% 50%;
   }
   50% {
-    background-position: 10% 100%;
+    background-position: 100% 50%;
   }
   100% {
-    background-position: 91% 0%;
+    background-position: 0% 50%;
   }
 }
 
 body {
-  background: linear-gradient(226deg, #ffffff, #49c5ff);
-  background-size: 1000% 1000%;
+  background: linear-gradient(270deg, #ffffff, #99dfff);
+  background-size: 400% 400%;
 
-  animation: backgroundAnimation 43s ease infinite;
+  animation: backgroundAnimation 20s ease infinite;
 }
 
-/* Title on the top of the app */
+/* Title at the main page */
+.homeTitle {
+  font-family: "Poppins";
+  font-size: 60px;
+  display: grid;
+  place-content: center;
+  text-align: center;
+}
+
+/* Title at the top of the page */
 .title {
   text-align: center;
   font-family: "Poppins";
   color: black;
+}
+
+/* Form for input a csv */
+.csvForm {
+  font-family: "Poppins";
+  text-align: center;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+}
+
+.csvForm select {
+  width: 100%;
+  height: 30px;
+  font-weight: bolder;
+  font-size: larger;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: white;
+  margin: 5% 0;
+}
+
+.csvForm input {
+  height: 30px;
+  font-size: large;
+  font-weight: bolder;
+  padding-bottom: 5px;
+}
+
+.csvForm input::file-selector-button {
+  font-weight: bolder;
+  background-color: white;
+  border: 3px solid black;
+  border-radius: 10px;
+}
+
+.csvForm input::file-selector-button:hover {
+  color: white;
+  background-color: grey;
+}
+
+.csvForm .next {
+  margin-left: 20%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  margin: 5% 0;
+}
+
+.buttons .upload {
+  width: 100%;
+  height: 30px;
+  font-weight: bolder;
+  font-size: larger;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: lightgreen;
+}
+
+.buttons .next {
+  width: 100%;
+  height: 30px;
+  font-weight: bolder;
+  font-size: larger;
+  border: 3px solid black;
+  border-radius: 10px;
+  background-color: rgb(253, 251, 117);
+}
+
+.csvForm button:active {
+  font-size: medium;
+}
+
+/* Defining the types of the columns (CSV) */
+.typeInputs {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+
+  margin-bottom: 40px;
+}
+
+.typeInputs label {
+  font-size: large;
+  font-family: "Poppins";
+  margin: 0 10px 0 20px;
+}
+
+.typeInputs select {
+  margin-top: 15px;
+
+  font-size: large;
+  font-weight: bolder;
+
+  border: 2px solid black;
+  border-radius: 10px;
+
+  padding: 0 3px;
 }
 
 /* Form in the main page */
@@ -40,9 +149,9 @@ body {
 
 .homePageForm .buttons {
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .homePageForm .buttons button {
@@ -58,9 +167,9 @@ body {
   font-size: large;
 }
 
-.homePageForm .buttons button:active {
+.homePageForm .buttons button:hover {
   background-color: black;
-  color: grey;
+  color: white;
 }
 
 /* Every form to add data in the app */
@@ -71,13 +180,36 @@ body {
   border-radius: 30px;
 }
 
-/* Text input */
-.newData {
-  width: 99%;
-  font-size: larger;
+.buttonZone {
+  margin-top: 20px;
+
+  display: flex;
+  justify-content: space-between;
+}
+
+/* New column */
+
+.newColumn {
+  display: flex;
+  justify-content: space-between;
+}
+
+.newColumn input {
   padding: 7px;
-  border-radius: 15px;
+  width: 55%;
+  margin-right: 20px;
   border: 3px solid #000;
+  border-radius: 10px;
+  font-size: larger;
+}
+
+.newColumn select {
+  padding: 5px;
+  width: 40%;
+  background-color: white;
+  border: 3px solid #000;
+  border-radius: 10px;
+  font-size: larger;
 }
 
 /* Buttons */
@@ -97,6 +229,11 @@ body {
 
 .insertButton {
   background-color: lightgreen;
+}
+
+.addForm button:active {
+  color: white;
+  background-color: grey;
 }
 
 .deleteButton {
@@ -131,6 +268,12 @@ body {
 }
 
 /* Styles of the table */
+
+.tableContainer {
+  width: 100%;
+  padding: 0, 5%;
+}
+
 .dataTable {
   font-family: Arial, Helvetica, sans-serif;
   border-collapse: collapse;
@@ -142,19 +285,22 @@ body {
 .dataTable th {
   border: 1px solid #ddd;
   padding: 8px;
+  top: 0;
 }
 
 .dataTable tr:nth-child(even) {
-  background-color: rgb(255, 255, 255, 0.25);
+  background-color: rgba(255, 255, 255, 0.411);
 }
 
 .dataTable tr:nth-child(odd) {
-  background-color: rgb(0, 174, 255, 0.25);
+  background-color: rgb(0, 204, 255);
 }
 
 .dataTable tr:hover {
-  background-color: rgb(0, 0, 0);
-  color: white;
+  border: 2px solid black;
+}
+.dataTable .headRow:hover {
+  border: rgba(0, 0, 0, 0) solid 0px;
 }
 
 .dataTable th {
@@ -164,6 +310,19 @@ body {
   text-align: left;
   background-color: #009cb1;
   color: white;
+  position: sticky;
+}
+
+.dataTable .columnName {
+  margin: 0;
+  margin-left: 1%;
+}
+
+.dataTable .columnType {
+  margin: 0;
+  margin-left: 1%;
+  color: rgb(190, 190, 190);
+  font-size: small;
 }
 
 .buttonCell {
@@ -176,6 +335,17 @@ body {
     "Lucida Sans Unicode", Verdana, sans-serif;
   text-align: center;
   background-color: rgb(255, 0, 0, 0.75);
+  padding: 1px;
+  border-radius: 30px;
+  border: 3px solid black;
+  margin: auto 10px;
+}
+
+.success {
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Verdana, sans-serif;
+  text-align: center;
+  background-color: lightgreen;
   padding: 1px;
   border-radius: 30px;
   border: 3px solid black;
@@ -223,7 +393,7 @@ body {
 .solution {
   background-color: #04aa6d;
   padding: 0.75%;
-  border-radius: 50%;
+  border-radius: 20px;
   text-align: center;
 }
 
@@ -238,11 +408,20 @@ body {
 
 /* Accuracy of the tree */
 .accuracy {
+  width: fit-content;
+  position: relative;
+  left: 50%;
+}
+
+.accuracy p {
+  position: relative;
+  left: -50%;
+
   text-align: center;
   font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
   font-weight: bolder;
 
-  padding: 3px;
+  padding: 5px;
   border: 3px solid black;
   border-radius: 10px;
 }

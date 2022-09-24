@@ -13,15 +13,22 @@ const mapFromArray = (array) => {
   return res;
 };
 
-const filterData = (data, conditionsMap) => {
+const filterData = (data, conditionsMap, columnsTypes) => {
   let filteredData = data;
 
   if (conditionsMap && conditionsMap.size > 0) {
     for (const [key, value] of conditionsMap) {
-      filteredData = filteredData.filter((element) => element[key] === value);
+      filteredData = filteredData.filter((instance) => {
+        if (columnsTypes[key] === "discrete") {
+          return instance[key] === value;
+        } else if (value[0] === "<=") {
+          return instance[key] <= value[1];
+        } else {
+          return instance[key] > value[1];
+        }
+      });
     }
   }
-
   return filteredData;
 };
 
@@ -94,6 +101,11 @@ const informationGain = (
   return res;
 };
 
-const utilsCalcs = { filterData, appearances, entropyConditioned, informationGain };
+const utilsCalcs = {
+  filterData,
+  appearances,
+  entropyConditioned,
+  informationGain,
+};
 
 export default utilsCalcs;

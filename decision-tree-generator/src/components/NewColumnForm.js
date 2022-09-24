@@ -1,10 +1,12 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 function NewColumnForm({
-  newColumn,
-  setNewColumn,
-  appState,
   setAppState,
   columns,
   setColumns,
+  columnsTypes,
+  setColumnsTypes,
   setMessage,
   setMessageType,
   dataInputs,
@@ -12,19 +14,40 @@ function NewColumnForm({
   dataFormated,
   setDataFormated,
 }) {
+  const [newColumn, setNewColumn] = useState(["", ""]);
+
+  let navigate = useNavigate();
+  const routeChange = (path) => {
+    navigate(path);
+  };
+
   const handleAdd = (event) => {
     event.preventDefault();
-    if (newColumn !== "" && !columns.includes(newColumn)) {
-      setColumns(columns.concat(newColumn));
-      setNewColumn("");
+    if (
+      newColumn[0] !== "" &&
+      newColumn[1] !== "" &&
+      !columns.includes(newColumn)
+    ) {
+      setColumns(columns.concat(newColumn[0]));
+      setColumnsTypes(columnsTypes.concat(newColumn[1]));
+      setNewColumn(["", ""]);
       setDataInputs(dataInputs.concat(""));
-      setDataFormated(dataFormated.set(newColumn, new Map()));
+      if (newColumn[1] === "discrete") {
+        setDataFormated(dataFormated.set(newColumn[0], new Map()));
+      }
       window.onbeforeunload = function () {
         return "Would you like to reload the page?";
       };
-    } else if (newColumn === "") {
+    } else if (newColumn[0] === "") {
       setMessageType("error");
       setMessage("Columns' names must not be blank");
+      setTimeout(() => {
+        setMessage(null);
+        setMessageType(null);
+      }, 5000);
+    } else if (newColumn[1] === "") {
+      setMessageType("error");
+      setMessage("Please, select a type for the column");
       setTimeout(() => {
         setMessage(null);
         setMessageType(null);
@@ -40,11 +63,19 @@ function NewColumnForm({
   };
 
   const handleNextStep = () => {
-    if (columns.length > 0) {
+    if (columns.length > 0 && columnsTypes.includes("discrete")) {
       setAppState("data");
-    } else {
+      routeChange("/insertData");
+    } else if (columns.length <= 0) {
       setMessageType("error");
       setMessage(`Please, add at least one column to continue`);
+      setTimeout(() => {
+        setMessage(null);
+        setMessageType(null);
+      }, 5000);
+    } else {
+      setMessageType("error");
+      setMessage("Please, add at least one diecrete column");
       setTimeout(() => {
         setMessage(null);
         setMessageType(null);
@@ -52,29 +83,40 @@ function NewColumnForm({
     }
   };
 
-  if (appState === "column") {
-    return (
-      <div className="addForm">
-        <h2>Insert new column:</h2>
-        <form onSubmit={handleAdd}>
+  return (
+    <div className="addForm">
+      <h2>Insert new column:</h2>
+      <form onSubmit={handleAdd}>
+        <div className="newColumn">
           <input
-            className="newData"
             type="text"
-            value={newColumn}
+            value={newColumn[0]}
             onChange={(event) => {
-              setNewColumn(event.target.value);
+              setNewColumn([event.target.value, newColumn[1]]);
             }}
           />
+          <select
+            value={newColumn[1]}
+            onChange={(event) => {
+              setNewColumn([newColumn[0], event.target.value]);
+            }}
+          >
+            <option value={""}>Select the type of the column</option>
+            <option value={"discrete"}>Discrete</option>
+            <option value={"continuous"}>Continuous</option>
+          </select>
+        </div>
+        <div className="buttonZone">
           <button className="insertButton" type="submit">
             Insert column
           </button>
           <button type="button" className="nextButton" onClick={handleNextStep}>
             Next Step
           </button>
-        </form>
-      </div>
-    );
-  }
+        </div>
+      </form>
+    </div>
+  );
 }
 
 export default NewColumnForm;
