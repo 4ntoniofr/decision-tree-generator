@@ -195,7 +195,7 @@ const ID3Generator = (
     } else {
       children[0] = {
         text: {
-          name: `<= ${
+          name: `≤ ${
             Math.round((thresholds[bestColumnIndex] + Number.EPSILON) * 10000) /
             10000
           }`,
@@ -238,10 +238,28 @@ const ID3Generator = (
     };
   };
 
+  /* const boundTree = (tree, element) => {
+    if (tree.HTMLclass === "column") {
+      tree.children.forEach((value) => {
+        if (value.children[0].HTMLclass === "sol" && element === null) {
+          element = value.children[0].text;
+        } else if (value.children[0].HTMLclass === "sol") {
+          
+        }
+      });
+    }
+  }; */
+
+  const tree = generateTree(
+    columns.filter((column) => column !== columns[mainColumnIndex]),
+    new Map()
+  );
+
+  console.log(tree);
+
   const tree_config = {
     chart: {
       container: "#tree",
-      scrollbar: "fancy",
       connectors: {
         type: "curve",
         style: {
@@ -251,10 +269,7 @@ const ID3Generator = (
       },
     },
 
-    nodeStructure: generateTree(
-      columns.filter((column) => column !== columns[mainColumnIndex]),
-      new Map()
-    ),
+    nodeStructure: tree,
   };
   setTreeAccuracy(1 - failedExamples / data.length);
   drawTree(tree_config);
